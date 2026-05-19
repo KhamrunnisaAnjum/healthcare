@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SURVEIL — AI Health Intelligence Platform</title>
+  <meta name="description" content="SURVEIL: AI-powered unified health intelligence platform for outbreak detection, patient risk prediction, and emergency resource routing."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <circle cx="14" cy="14" r="13" stroke="#00D4AA" stroke-width="2"/>
+          <path d="M8 14h3l2-5 3 10 2-8 2 3h2" stroke="#00D4AA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <span class="logo-text">SURVEIL</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 4a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm9 0a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2V4zM2 13a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2H4a2 2 0 01-2-2v-3zm9 0a2 2 0 012-2h3a2 2 0 012 2v3a2 2 0 01-2 2h-3a2 2 0 01-2-2v-3z"/></svg>
+        <span>Dashboard</span>
+      </button>
+      <button class="nav-item" data-view="pulse" onclick="switchView('pulse')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+        <span>Community Pulse</span>
+        <span class="nav-badge">3</span>
+      </button>
+      <button class="nav-item" data-view="clinical" onclick="switchView('clinical')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+        <span>Clinical Risk</span>
+        <span class="nav-badge critical">5</span>
+      </button>
+      <button class="nav-item" data-view="radar" onclick="switchView('radar')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+        <span>Resource Radar</span>
+      </button>
+      <button class="nav-item" data-view="alerts" onclick="switchView('alerts')">
+        <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
+        <span>Alert Hub</span>
+        <span class="nav-badge critical">12</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="status-dot online"></div>
+      <div>
+        <div class="status-label">System Live</div>
+        <div class="status-sub">All modules active</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="view-title" id="viewTitle">Dashboard</div>
+        <div class="live-indicator">
+          <span class="pulse-dot"></span>
+          <span>Live</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="lang-selector">
+          <select id="langSelect" onchange="setLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ta">தமிழ்</option>
+            <option value="te">తెలుగు</option>
+            <option value="bn">বাংলা</option>
+            <option value="mr">मराठी</option>
+            <option value="gu">ગુજરાતી</option>
+            <option value="kn">ಕನ್ನಡ</option>
+          </select>
+        </div>
+        <div class="topbar-time" id="topbarTime"></div>
+        <div class="user-avatar">DR</div>
+      </div>
+    </header>
+
+    <!-- Views -->
+    <div class="views-wrapper">
+
+      <!-- ======= DASHBOARD VIEW ======= -->
+      <section class="view active" id="view-dashboard">
+        <div class="section-header">
+          <h1>Health Intelligence Overview</h1>
+          <p>Real-time monitoring across all 4 modules — community, clinical, resource & alert systems</p>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon teal"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg></div>
+            <div class="kpi-body">
+              <div class="kpi-value" id="kpi-reports">2,847</div>
+              <div class="kpi-label">Symptom Reports (24h)</div>
+              <div class="kpi-trend up">↑ 12% from yesterday</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon red"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg></div>
+            <div class="kpi-body">
+              <div class="kpi-value">47</div>
+              <div class="kpi-label">High-Risk Patients</div>
+              <div class="kpi-trend up">↑ 5 new alerts</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon amber"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg></div>
+            <div class="kpi-body">
+              <div class="kpi-value">312</div>
+              <div class="kpi-label">ICU Beds Available</div>
+              <div class="kpi-trend down">↓ 8% capacity</div>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon purple"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg></div>
+            <div class="kpi-body">
+              <div class="kpi-value">12</div>
+              <div class="kpi-label">Active Alerts</div>
+              <div class="kpi-trend up">↑ 3 critical</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card outbreak-map-card">
+            <div class="card-header">
+              <span class="card-title">Outbreak Heatmap</span>
+              <span class="card-badge live">LIVE</span>
+            </div>
+            <canvas id="dashboardMap" width="500" height="280"></canvas>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Risk Distribution</span>
+            </div>
+            <div class="risk-bars">
+              <div class="risk-bar-row">
+                <span class="risk-label">Critical</span>
+                <div class="risk-bar-track"><div class="risk-bar-fill critical" style="width:18%"></div></div>
+                <span class="risk-val">47</span>
+              </div>
+              <div class="risk-bar-row">
+                <span class="risk-label">High</span>
+                <div class="risk-bar-track"><div class="risk-bar-fill high" style="width:34%"></div></div>
+                <span class="risk-val">89</span>
+              </div>
+              <div class="risk-bar-row">
+                <span class="risk-label">Medium</span>
+                <div class="risk-bar-track"><div class="risk-bar-fill medium" style="width:52%"></div></div>
+                <span class="risk-val">136</span>
+              </div>
+              <div class="risk-bar-row">
+                <span class="risk-label">Low</span>
+                <div class="risk-bar-track"><div class="risk-bar-fill low" style="width:76%"></div></div>
+                <span class="risk-val">198</span>
+              </div>
+            </div>
+            <div class="card-header" style="margin-top:20px">
+              <span class="card-title">Disease Clusters Detected</span>
+            </div>
+            <div class="cluster-list">
+              <div class="cluster-item">
+                <div class="cluster-dot red"></div>
+                <div class="cluster-info"><span>Influenza A — Koramangala</span><small>142 reports · 3 days</small></div>
+                <span class="cluster-risk high-tag">HIGH</span>
+              </div>
+              <div class="cluster-item">
+                <div class="cluster-dot amber"></div>
+                <div class="cluster-info"><span>Dengue — Whitefield</span><small>67 reports · 5 days</small></div>
+                <span class="cluster-risk med-tag">MED</span>
+              </div>
+              <div class="cluster-item">
+                <div class="cluster-dot teal"></div>
+                <div class="cluster-info"><span>Gastro — Indiranagar</span><small>29 reports · 2 days</small></div>
+                <span class="cluster-risk low-tag">LOW</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card activity-card">
+            <div class="card-header">
+              <span class="card-title">Live Activity Feed</span>
+              <span class="card-badge live">LIVE</span>
+            </div>
+            <div class="activity-feed" id="activityFeed"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header"><span class="card-title">System Health</span></div>
+            <div class="system-health">
+              <div class="health-item">
+                <span class="health-name">Community Pulse Engine</span>
+                <div class="health-bar"><div class="health-fill" style="width:94%"></div></div>
+                <span class="health-pct">94%</span>
+              </div>
+              <div class="health-item">
+                <span class="health-name">Clinical Risk Predictor</span>
+                <div class="health-bar"><div class="health-fill" style="width:98%"></div></div>
+                <span class="health-pct">98%</span>
+              </div>
+              <div class="health-item">
+                <span class="health-name">Emergency Radar</span>
+                <div class="health-bar"><div class="health-fill" style="width:87%"></div></div>
+                <span class="health-pct">87%</span>
+              </div>
+              <div class="health-item">
+                <span class="health-name">Alert Hub</span>
+                <div class="health-bar"><div class="health-fill" style="width:100%"></div></div>
+                <span class="health-pct">100%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= COMMUNITY PULSE VIEW ======= -->
+      <section class="view" id="view-pulse">
+        <div class="section-header">
+          <h1>Community Pulse Engine</h1>
+          <p>AI-powered multilingual symptom surveillance and geospatial outbreak clustering</p>
+        </div>
+        <div class="pulse-layout">
+          <div class="pulse-left">
+            <div class="card chatbot-card">
+              <div class="card-header">
+                <span class="card-title">AI Health Assistant</span>
+                <div class="lang-pills">
+                  <button class="lang-pill active" onclick="setChatLang('en',this)">EN</button>
+                  <button class="lang-pill" onclick="setChatLang('hi',this)">हि</button>
+                  <button class="lang-pill" onclick="setChatLang('ta',this)">த</button>
+                  <button class="lang-pill" onclick="setChatLang('te',this)">తె</button>
+                </div>
+              </div>
+              <div class="chatbot-messages" id="chatMessages">
+                <div class="chat-msg bot">
+                  <div class="chat-avatar bot-av">AI</div>
+                  <div class="chat-bubble">Hello! I'm SURVEIL's health assistant. Please describe your symptoms anonymously and I'll help detect any outbreak patterns in your area. Your data is anonymized.</div>
+                </div>
+              </div>
+              <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Describe your symptoms..." onkeydown="if(event.key==='Enter') sendChatMessage()"/>
+                <button class="send-btn" onclick="sendChatMessage()">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/></svg>
+                </button>
+              </div>
+              <div class="quick-symptoms">
+                <span class="quick-label">Quick select:</span>
+                <button class="symptom-chip" onclick="quickSymptom('Fever and headache')">Fever + Headache</button>
+                <button class="symptom-chip" onclick="quickSymptom('Body ache and chills')">Body Ache</button>
+                <button class="symptom-chip" onclick="quickSymptom('Cough and cold')">Cough/Cold</button>
+                <button class="symptom-chip" onclick="quickSymptom('Nausea and vomiting')">Nausea</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><span class="card-title">Symptom Signal Clusters</span><span class="card-badge live">LIVE</span></div>
+              <div class="signal-list" id="signalList"></div>
+            </div>
+          </div>
+
+          <div class="pulse-right">
+            <div class="card map-card">
+              <div class="card-header">
+                <span class="card-title">Geospatial Heatmap — Bangalore</span>
+                <div class="map-legend">
+                  <span class="legend-item"><span class="legend-dot red"></span>Critical</span>
+                  <span class="legend-item"><span class="legend-dot amber"></span>Moderate</span>
+                  <span class="legend-item"><span class="legend-dot teal"></span>Low</span>
+                </div>
+              </div>
+              <canvas id="pulseMap" width="560" height="400"></canvas>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Outbreak Prediction</span></div>
+              <div class="prediction-grid">
+                <div class="pred-card critical-bg">
+                  <div class="pred-label">Influenza A</div>
+                  <div class="pred-pct">87%</div>
+                  <div class="pred-sub">Hospital surge in 5-7 days</div>
+                  <div class="pred-bar"><div style="width:87%;background:#FF6B6B;height:4px;border-radius:2px"></div></div>
+                </div>
+                <div class="pred-card warn-bg">
+                  <div class="pred-label">Dengue</div>
+                  <div class="pred-pct">64%</div>
+                  <div class="pred-sub">Monitor closely</div>
+                  <div class="pred-bar"><div style="width:64%;background:#FFB347;height:4px;border-radius:2px"></div></div>
+                </div>
+                <div class="pred-card low-bg">
+                  <div class="pred-label">Gastroenteritis</div>
+                  <div class="pred-pct">31%</div>
+                  <div class="pred-sub">Early detection stage</div>
+                  <div class="pred-bar"><div style="width:31%;background:#00D4AA;height:4px;border-radius:2px"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= CLINICAL RISK VIEW ======= -->
+      <section class="view" id="view-clinical">
+        <div class="section-header">
+          <h1>Clinical Risk Predictor</h1>
+          <p>Ensemble ML model predicting patient deterioration 6–24 hours in advance with explainable AI</p>
+        </div>
+        <div class="clinical-layout">
+          <div class="clinical-table-wrap card">
+            <div class="card-header">
+              <span class="card-title">Patient Risk Monitor</span>
+              <div class="table-filters">
+                <button class="filter-btn active" onclick="filterPatients('all',this)">All</button>
+                <button class="filter-btn" onclick="filterPatients('critical',this)">Critical</button>
+                <button class="filter-btn" onclick="filterPatients('high',this)">High</button>
+                <button class="filter-btn" onclick="filterPatients('medium',this)">Medium</button>
+              </div>
+            </div>
+            <table class="patient-table">
+              <thead>
+                <tr><th>Patient</th><th>Ward</th><th>Risk Score</th><th>Vitals</th><th>Alert Type</th><th>Time Window</th><th>Action</th></tr>
+              </thead>
+              <tbody id="patientTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="clinical-detail" id="clinicalDetail">
+            <div class="card detail-placeholder">
+              <div class="placeholder-icon">
+                <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+              </div>
+              <p>Select a patient to view detailed risk analysis, vitals timeline, and AI explainability report.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= RADAR VIEW ======= -->
+      <section class="view" id="view-radar">
+        <div class="section-header">
+          <h1>Emergency Resource Radar</h1>
+          <p>Real-time GIS tracking of hospitals, blood banks, and ambulances with live routing</p>
+        </div>
+        <div class="radar-layout">
+          <div class="radar-sidebar">
+            <div class="card">
+              <div class="card-header"><span class="card-title">Resource Filters</span></div>
+              <div class="resource-filters">
+                <label class="filter-check"><input type="checkbox" checked onchange="toggleLayer('hospitals')"><span class="checkmark hosp"></span>Hospitals (18)</label>
+                <label class="filter-check"><input type="checkbox" checked onchange="toggleLayer('blood')"><span class="checkmark blood"></span>Blood Banks (7)</label>
+                <label class="filter-check"><input type="checkbox" checked onchange="toggleLayer('ambulance')"><span class="checkmark amb"></span>Ambulances (24)</label>
+                <label class="filter-check"><input type="checkbox" checked onchange="toggleLayer('icu')"><span class="checkmark icu"></span>ICU Facilities (12)</label>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Nearest Resources</span></div>
+              <div class="resource-list" id="resourceList"></div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Route to Emergency</span></div>
+              <div class="route-form">
+                <input type="text" class="route-input" id="routeFrom" placeholder="Your location..." value="Koramangala, Bangalore"/>
+                <select class="route-input" id="routeType">
+                  <option>Cardiac Emergency</option>
+                  <option>Trauma / Accident</option>
+                  <option>Stroke</option>
+                  <option>Blood Requirement</option>
+                  <option>ICU Admission</option>
+                </select>
+                <button class="btn-primary" onclick="calculateRoute()">Find Best Route</button>
+              </div>
+              <div id="routeResult" class="route-result hidden"></div>
+            </div>
+          </div>
+          <div class="radar-map-wrap card">
+            <div class="card-header">
+              <span class="card-title">Live Resource Map — Bangalore</span>
+              <span class="card-badge live">LIVE</span>
+            </div>
+            <canvas id="radarMap" width="700" height="520"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= ALERTS VIEW ======= -->
+      <section class="view" id="view-alerts">
+        <div class="section-header">
+          <h1>Unified Alert & Response Hub</h1>
+          <p>Role-based alert center: outbreak alerts for health workers, clinical alerts for nurses, routing for patients</p>
+        </div>
+        <div class="alerts-layout">
+          <div class="alerts-controls card">
+            <div class="role-selector">
+              <span class="role-label">View as:</span>
+              <button class="role-btn active" onclick="setRole('admin',this)">Admin</button>
+              <button class="role-btn" onclick="setRole('nurse',this)">Nurse</button>
+              <button class="role-btn" onclick="setRole('worker',this)">Health Worker</button>
+              <button class="role-btn" onclick="setRole('patient',this)">Patient</button>
+            </div>
+            <div class="alert-stats">
+              <div class="astat critical"><span class="astat-num" id="critCount">3</span><span>Critical</span></div>
+              <div class="astat high"><span class="astat-num" id="highCount">5</span><span>High</span></div>
+              <div class="astat med"><span class="astat-num" id="medCount">4</span><span>Medium</span></div>
+              <div class="astat low"><span class="astat-num" id="lowCount">8</span><span>Resolved</span></div>
+            </div>
+          </div>
+          <div class="alerts-grid" id="alertsGrid"></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
